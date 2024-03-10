@@ -96,7 +96,7 @@ Idents(integrated) <- integrated$Sub_Cluster
 integrated <- subset(integrated,idents = c("Endothelial cells","Cycling-MKI67","Fibroblasts","Cyclings","Hepatocytes"),invert=T)
 markers <- read.csv("../result/integrated.final.csv",row.names = 1)
 markers <- markers[markers$p_val_adj<0.05,]
-markers <- markers[markers$cluster%in%c("NK cells","DC-CLEC9A","DC-IDO1","Macrophages-C1QC",
+markers <- markers[markers$cluster%in%c("NK cells","DC-CD1C","DC-CLEC9A","Macrophages-C1QC",
                                         "Macrophages-SPP1","Monocytes-S100A8","Mast cells-TPSAB1",
                                         "CD8-GNLY","CD8-GZMK","CD4-ANXA1","CD8-XCL1","CD4-IL7R","CD8-SLC4A10",
                                         "CD4-FOXP3","B cells","Plasma cells"),]
@@ -613,7 +613,7 @@ integrated <- AddMetaData(integrated,metadata = All_meta)
 table(integrated$New_celltype)
 integrated$Sub_Cluster <- factor(integrated$Sub_Cluster,levels = c("B cells-IGHD","B cells-TNFRSF13B","B cells-RGS2",
                                                                    "Plasma cells-JCHAIN","Plasma cells-IGHG1",
-                                                                   "DC-IDO1","DC-CLEC9A","Macrophages-C1QC","Macrophages-SPP1",
+                                                                   "DC-CLEC9A","DC-CD1C","Macrophages-C1QC","Macrophages-SPP1",
                                                                    "Monocytes-S100A8","Mast cells-TPSAB1","Cycling-MKI67",
                                                                    "CD4-IL7R","CD4-ANXA1","CD4-FOXP3","CD8-GZMK",
                                                                    "CD8-GNLY","CD8-XCL1","CD8-SLC4A10",
@@ -629,7 +629,7 @@ meta <- data.frame(cellType = sce$Sub_Cluster, row.names =  Cells(sce))
 meta$cellType <- as.character(meta$cellType)
 meta$cellType <-factor(meta$cellType,levels=c("B cells-IGHD","B cells-TNFRSF13B","B cells-RGS2",
                                               "Plasma cells-JCHAIN","Plasma cells-IGHG1",
-                                              "DC-IDO1","DC-CLEC9A","Macrophages-C1QC","Macrophages-SPP1",
+                                              "DC-CLEC9A","DC-CD1C","Macrophages-C1QC","Macrophages-SPP1",
                                               "Monocytes-S100A8","Mast cells-TPSAB1","Cycling-MKI67",
                                               "CD4-IL7R","CD4-ANXA1","CD4-FOXP3","CD8-GZMK",
                                               "CD8-GNLY","CD8-XCL1","CD8-SLC4A10",
@@ -672,7 +672,7 @@ meta <- data.frame(cellType = sce$Sub_Cluster, row.names =  Cells(sce))
 meta$cellType <- as.character(meta$cellType)
 meta$cellType <-factor(meta$cellType,levels=c("B cells-IGHD","B cells-TNFRSF13B","B cells-RGS2",
                                               "Plasma cells-JCHAIN","Plasma cells-IGHG1",
-                                              "DC-IDO1","DC-CLEC9A","Macrophages-C1QC","Macrophages-SPP1",
+                                              "DC-CLEC9A","DC-CD1C","Macrophages-C1QC","Macrophages-SPP1",
                                               "Monocytes-S100A8","Mast cells-TPSAB1","Cycling-MKI67",
                                               "CD4-IL7R","CD4-ANXA1","CD4-FOXP3","CD8-GZMK",
                                               "CD8-GNLY","CD8-XCL1","CD8-SLC4A10",
@@ -1453,7 +1453,7 @@ ICBresponse <- patient_ICBresponse
 table(ICBresponse$Responder=="False")
 
 ICBresponse$Responder <- ifelse(str_detect(ICBresponse$Responder,"False"),"NR","R")
-ICBresponse1 <- dplyr::pull(ICBresponse, 3) ##将data.frame中的一列转换为向量
+ICBresponse1 <- dplyr::pull(ICBresponse, 3) ##
 names(ICBresponse1) <- ICBresponse$Patient
 ICBresponse1[1:10]
 save(ICBresponse,file = "ICBresponse.Rdata")
@@ -1482,7 +1482,7 @@ p5 <- ggplot(data = dat_plot,aes(x = id,y = t,fill = threshold)) +
   geom_hline(yintercept = c(-0.5,0.5),color = 'white',size = 0.5,lty='dashed') +
   xlab('') + 
   ylab('TIDE score') + 
-  guides(fill=guide_legend(key.width = 3, key.height = 5, nrow = 2, ncol = 1, byrow = TRUE))+ #显示图例
+  guides(fill=guide_legend(key.width = 3, key.height = 5, nrow = 2, ncol = 1, byrow = TRUE))+ #
   theme_bw()+
   theme_prism(border = T) +
   theme(
